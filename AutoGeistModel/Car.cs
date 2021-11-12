@@ -24,7 +24,7 @@ namespace AutoGeistModel
         public string Model { get; set; }
 
         [StringLength(50)]
-        public string Bodystyle { get; set; }
+        public string BodyStyle { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }

@@ -10,13 +10,14 @@
     <Window.Resources>
         <CollectionViewSource x:Key="carViewSource" d:DesignSource="{d:DesignInstance {x:Type AutoGeistModel:Car}, CreateList=True}"/>
         <CollectionViewSource x:Key="customerViewSource" d:DesignSource="{d:DesignInstance {x:Type AutoGeistModel:Customer}, CreateList=True}"/>
+        <CollectionViewSource x:Key="carOrdersViewSource" Source="{Binding Order, Source={StaticResource carViewSource}}"/>
     </Window.Resources>
     <Grid>
-        <TabControl x:Name="tbCtrlAutoGeist" HorizontalAlignment="Left" Height="373" Margin="34,22,0,0" VerticalAlignment="Top" Width="700">
+        <TabControl x:Name="tbCtrlAutoGeist" HorizontalAlignment="Left" Height="373" Margin="270,22,0,0" VerticalAlignment="Top" Width="459">
             <TabItem Header="Cars">
-                <Grid Background="#FFE5E5E5" DataContext="{StaticResource carViewSource}">
-                    <DataGrid HorizontalAlignment="Left" Height="109" Margin="424,10,0,0" VerticalAlignment="Top" Width="239" ItemsSource="{Binding}" SelectionChanged="DataGrid_SelectionChanged"/>
-                    <Grid x:Name="grid1" Margin="450,157,50 ,0" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5" DataContext="{StaticResource carViewSource}" Margin="0,0,-1.8,-0.2">
+                    <DataGrid x:Name="carDataGrid" HorizontalAlignment="Left" Height="121" Margin="47,10,0,0" VerticalAlignment="Top" Width="346" ItemsSource="{Binding}"/>
+                    <Grid x:Name="grid1" Margin="100,189,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="217">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.119"/>
                             <ColumnDefinition Width="75.95"/>
@@ -28,8 +29,8 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Bodystyle:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" VerticalAlignment="Center" Height="26" Width="64"/>
-                        <TextBox x:Name="bodystyleTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="0" Text="{Binding Bodystyle, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
+                        <Label Content="BodyStyle:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" VerticalAlignment="Center" Height="26" Width="64"/>
+                        <TextBox x:Name="bodyStyleTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="0" Text="{Binding Bodystyle, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
                         <Label Content="Car Id:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="1" VerticalAlignment="Center" IsEnabled="False" Height="26" Width="43"/>
                         <TextBox x:Name="carIdTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="1" Text="{Binding CarId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
                         <Label Content="Make:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="2" VerticalAlignment="Center" Height="26" Width="42"/>
@@ -37,19 +38,17 @@
                         <Label Content="Model:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="46"/>
                         <TextBox x:Name="modelTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="3" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
                     </Grid>
-                    <Button x:Name="btnNew" Content="New" HorizontalAlignment="Left" Margin="74,27,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="74,81,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="74,142,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="74,224,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="74,281,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnPrev" Content="Previous" HorizontalAlignment="Left" Margin="435,127,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnNext" Content="Next" HorizontalAlignment="Left" Margin="588,127,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnPrev" Content="Previous" HorizontalAlignment="Left" Margin="66,147,0,0" VerticalAlignment="Top" Width="75" Click="btnPrev_Click"/>
+                    <Button x:Name="btnNext" Content="Next" HorizontalAlignment="Left" Margin="242,147,0,0" VerticalAlignment="Top" Width="75" Click="btnNext_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Customers">
                 <Grid Background="#FFE5E5E5" DataContext="{StaticResource customerViewSource}" Margin="0,0,2.4,-0.2">
-                    <DataGrid HorizontalAlignment="Left" Height="110" Margin="365,10,0,0" VerticalAlignment="Top" Width="319" ItemsSource="{Binding}"/>
-                    <Grid x:Name="grid2" HorizontalAlignment="Left" Margin="386,187,0,0" VerticalAlignment="Top" Width="277" Height="148">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="customerDataGrid" Height="112" Margin="44,15,0,0" VerticalAlignment="Top" ItemsSource="{Binding}" HorizontalAlignment="Left" Width="360"/>
+                    <Grid x:Name="grid2" HorizontalAlignment="Left" Margin="99,187,0,0" VerticalAlignment="Top" Width="277" Height="148">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -69,19 +68,67 @@
                         <Label Content="Purchase Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
                         <DatePicker x:Name="purchaseDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" SelectedDate="{Binding PurchaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
                     </Grid>
-                    <Button x:Name="btnNew1" Content="New" HorizontalAlignment="Left" Margin="80,35,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnEdit1" Content="Edit" HorizontalAlignment="Left" Margin="80,101,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnDelete1" Content="Delete" HorizontalAlignment="Left" Margin="80,158,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnSave1" Content="Save" HorizontalAlignment="Left" Margin="80,228,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnCancel1" Content="Cancel" HorizontalAlignment="Left" Margin="80,294,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnPrev1" Content="Previous" HorizontalAlignment="Left" Margin="365,143,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="btnNext1" Content="Next" HorizontalAlignment="Left" Margin="588,143,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="btnPrev1" Content="Previous" HorizontalAlignment="Left" Margin="99,143,0,0" VerticalAlignment="Top" Width="75" Click="btnPrev1_Click"/>
+                    <Button x:Name="btnNext1" Content="Next" HorizontalAlignment="Left" Margin="278,143,0,0" VerticalAlignment="Top" Width="75" Click="btnNext1_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Orders">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5" DataContext="{StaticResource carOrdersViewSource}">
+                    <ComboBox x:Name="cbCars" HorizontalAlignment="Left" Margin="76,62,0,0" VerticalAlignment="Top" Width="120" 
+                              SelectedValue="{Binding ElementName=ordersDataGrid,Path=SelectedItem.CarId,Mode=OneWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                            <Binding Path="Make"/>
+                                            <Binding Path="Model"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox x:Name="cbCustomers" HorizontalAlignment="Left" Margin="273,62,0,0" VerticalAlignment="Top" Width="120"
+                              SelectedValue="{Binding ElementName=ordersDataGrid,Path=SelectedItem.CustId,Mode=OneWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="FirstName"/>
+                                            <Binding Path="LastName"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label x:Name="lblCars" Content="Cars" HorizontalAlignment="Left" Margin="76,31,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lblCustomers" Content="Customers" HorizontalAlignment="Left" Margin="273,31,0,0" VerticalAlignment="Top"/>
+                    <DataGrid x:Name="ordersDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="76,120,96.6,95.8" RowDetailsVisibilityMode="VisibleWhenSelected">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="FirstNameColumn" Binding="{Binding FirstName}" Header="First Name" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="LastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="MakeColumn" Binding="{Binding Make}" Header="Make" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="ModelColumn" Binding="{Binding Model}" Header="Model" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
+        <GroupBox x:Name="gbOperations" Header="CRUD" HorizontalAlignment="Left" Height="99" Margin="42,43,0,0" VerticalAlignment="Top" Width="109" Button.Click="gbOperations_Click">
+            <StackPanel Margin="0,10,0,0" HorizontalAlignment="Left" Width="90" Height="83" VerticalAlignment="Top">
+                <Button x:Name="btnNew" Content="New" VerticalAlignment="Top" Height="22" HorizontalAlignment="Left" Width="86" Click="btnNew_Click"/>
+                <Button x:Name="btnEdit" Content="Edit" VerticalAlignment="Top" Height="22" HorizontalAlignment="Left" Width="86" Click="btnEdit_Click"/>
+                <Button x:Name="btnDelete" Content="Delete" VerticalAlignment="Top" Height="22" HorizontalAlignment="Left" Width="86" Click="btnDelete_Click"/>
+            </StackPanel>
 
+
+        </GroupBox>
+        <GroupBox x:Name="gbActions" Header="Actions" HorizontalAlignment="Left" Height="100" Margin="86,223,0,0" VerticalAlignment="Top" Width="100">
+            <StackPanel HorizontalAlignment="Left" Height="59" Margin="0,10,0,0" VerticalAlignment="Top" Width="80">
+                <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
+                <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </Window>

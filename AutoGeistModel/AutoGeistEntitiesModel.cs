@@ -12,9 +12,9 @@ namespace AutoGeistModel
         {
         }
 
-        public virtual DbSet<Car> Car { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<Car> Cars { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
