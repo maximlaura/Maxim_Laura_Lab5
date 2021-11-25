@@ -11,6 +11,19 @@
         <CollectionViewSource x:Key="carViewSource" d:DesignSource="{d:DesignInstance {x:Type AutoGeistModel:Car}, CreateList=True}"/>
         <CollectionViewSource x:Key="customerViewSource" d:DesignSource="{d:DesignInstance {x:Type AutoGeistModel:Customer}, CreateList=True}"/>
         <CollectionViewSource x:Key="carOrdersViewSource" Source="{Binding Order, Source={StaticResource carViewSource}}"/>
+        <ControlTemplate x:Key="validationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)/ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <TabControl x:Name="tbCtrlAutoGeist" HorizontalAlignment="Left" Height="373" Margin="270,22,0,0" VerticalAlignment="Top" Width="459">
@@ -30,13 +43,19 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="BodyStyle:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" VerticalAlignment="Center" Height="26" Width="64"/>
-                        <TextBox x:Name="bodyStyleTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="0" Text="{Binding Bodystyle, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="bodyStyleTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="0" 
+                                 Text="{Binding BodyStyle, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}"/>
                         <Label Content="Car Id:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="1" VerticalAlignment="Center" IsEnabled="False" Height="26" Width="43"/>
-                        <TextBox x:Name="carIdTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="1" Text="{Binding CarId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="carIdTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="1" 
+                                 Text="{Binding CarId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
                         <Label Content="Make:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="2" VerticalAlignment="Center" Height="26" Width="42"/>
-                        <TextBox x:Name="makeTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="2" Text="{Binding Make, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="makeTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="2" 
+                                 Text="{Binding Make, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}"/>
                         <Label Content="Model:" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="3" VerticalAlignment="Center" Height="26" Width="46"/>
-                        <TextBox x:Name="modelTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="3" Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="modelTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="5.8,4,0,4" Grid.Row="3" 
+                                 Text="{Binding Model, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" Grid.ColumnSpan="2"/>
                     </Grid>
                     <Button x:Name="btnPrev" Content="Previous" HorizontalAlignment="Left" Margin="66,147,0,0" VerticalAlignment="Top" Width="75" Click="btnPrev_Click"/>
                     <Button x:Name="btnNext" Content="Next" HorizontalAlignment="Left" Margin="242,147,0,0" VerticalAlignment="Top" Width="75" Click="btnNext_Click"/>
@@ -60,13 +79,19 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Cust Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-                        <TextBox x:Name="custIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding CustId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <TextBox x:Name="custIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" 
+                                 Text="{Binding CustId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
                         <Label Content="First Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                        <TextBox x:Name="firstNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <TextBox x:Name="firstNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1"
+                                 Text="{Binding firstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" 
+                                 Width="120" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}"/>
                         <Label Content="Last Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                        <TextBox x:Name="lastNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <TextBox x:Name="lastNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" 
+                                 Text="{Binding lastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"
+                                 Width="120" Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}"/>
                         <Label Content="Purchase Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                        <DatePicker x:Name="purchaseDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" SelectedDate="{Binding PurchaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+                        <DatePicker x:Name="purchaseDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="3" 
+                                    SelectedDate="{Binding PurchaseDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
                     </Grid>
                     <Button x:Name="btnPrev1" Content="Previous" HorizontalAlignment="Left" Margin="99,143,0,0" VerticalAlignment="Top" Width="75" Click="btnPrev1_Click"/>
                     <Button x:Name="btnNext1" Content="Next" HorizontalAlignment="Left" Margin="278,143,0,0" VerticalAlignment="Top" Width="75" Click="btnNext1_Click"/>
@@ -122,11 +147,27 @@
                 <Button x:Name="btnDelete" Content="Delete" VerticalAlignment="Top" Height="22" HorizontalAlignment="Left" Width="86" Click="btnDelete_Click"/>
             </StackPanel>
 
-
         </GroupBox>
         <GroupBox x:Name="gbActions" Header="Actions" HorizontalAlignment="Left" Height="100" Margin="86,223,0,0" VerticalAlignment="Top" Width="100">
             <StackPanel HorizontalAlignment="Left" Height="59" Margin="0,10,0,0" VerticalAlignment="Top" Width="80">
-                <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
+                <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnSave_Click">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="false" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=firstNameTextBox, Path=(Validation.HasError)}" Value="false" />
+                                        <Condition Binding="{Binding ElementName=lastNameTextBox, Path=(Validation.HasError)}" Value="false" />
+                                        <Condition Binding="{Binding ElementName=makeTextBox, Path=(Validation.HasError)}" Value="false" />
+                                        <Condition Binding="{Binding ElementName=bodyStyleTextBox, Path=(Validation.HasError)}" Value="false" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="true" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button x:Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
             </StackPanel>
         </GroupBox>
